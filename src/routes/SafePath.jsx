@@ -11,7 +11,11 @@ const SafePath = ({ children }) => {
         return config;
     }, function (error) {
         // Do something with request error
-        navigate("/");
+        if (error.response.status === 401) {
+            sessionStorage.clear();
+            navigate("/");
+        }
+        return Promise.reject(error);
     }
         
     );
@@ -24,7 +28,11 @@ const SafePath = ({ children }) => {
     }, function onRejected(error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
-         navigate("/");
+         if (error.response.status === 401) {
+            sessionStorage.clear();
+            navigate("/");
+        }
+        return Promise.reject(error);
     });
 
     return token ? children : <Navigate to={"/"} />;
