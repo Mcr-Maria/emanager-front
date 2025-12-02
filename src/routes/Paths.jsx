@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound";
 import Usuarios from "../pages/Usuarios";
 import Plataformas from "../pages/Plataformas";
 import Clientes from "../pages/Clientes";
+import Pedidos from "../pages/Pedidos";
 
 const Paths = () => {
     return (
@@ -22,6 +23,7 @@ const Paths = () => {
                         <Route path="/dashboard/usuarios" element={<Usuarios />} />
                         <Route path="/dashboard/plataformas" element={<Plataformas />} />
                         <Route path="/dashboard/clientes" element={<Clientes />} />
+                        <Route path="/dashboard/pedidos" element={<Pedidos />} />
                     </Route>
 
                     <Route path="*" element={<NotFound />} />

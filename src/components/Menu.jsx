@@ -19,6 +19,9 @@ const Menu = () => {
                 <li>
                     <NavLink to={"/dashboard/clientes"}>Clientes</NavLink>
                 </li>
+                <li>
+                    <NavLink to={"/dashboard/pedidos"}>Pedidos</NavLink>
+                </li>
             </ul>
         </div>
     );
