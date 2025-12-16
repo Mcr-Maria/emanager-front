@@ -23,7 +23,6 @@ const Pedidos = () => {
     const [verDetalhes, setVerDetalhes] = useState(false);
     const [pedidoSelecionado, setPedidoSelecionado] = useState({});
     const [formCriar] = Form.useForm();
-    const [formEditar] = Form.useForm();
     const [formPesquisar] = Form.useForm();
     const [jogos, setJogos] = useState([])
     const [licencas, setLicencas] = useState([])
@@ -217,14 +216,6 @@ const Pedidos = () => {
                     onFinish={pesquisar}
                     form={formPesquisar}
                 >
-                    <div>
-                        <Form.Item                   
-                    >
-                        <Input />
-                    </Form.Item>
-                    </div>
-            
-
                     <Form.Item
                         label="Nome do jogo"
                         name={"nome"}
