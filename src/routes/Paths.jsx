@@ -10,6 +10,7 @@ import Usuarios from "../pages/Usuarios";
 import Plataformas from "../pages/Plataformas";
 import Clientes from "../pages/Clientes";
 import Pedidos from "../pages/Pedidos";
+import Jogos from "../pages/Jogos";
 
 const Paths = () => {
     return (
@@ -24,6 +25,7 @@ const Paths = () => {
                         <Route path="/dashboard/plataformas" element={<Plataformas />} />
                         <Route path="/dashboard/clientes" element={<Clientes />} />
                         <Route path="/dashboard/pedidos" element={<Pedidos />} />
+                        <Route path="/dashboard/jogos" element={<Jogos />} />
                     </Route>
 
                     <Route path="*" element={<NotFound />} />

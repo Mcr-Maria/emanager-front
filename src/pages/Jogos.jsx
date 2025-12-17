@@ -1,14 +1,16 @@
-import { Button, Drawer, Form, Input, Popconfirm, Table } from "antd";
-import { useBuscarJogo, useCriarJogo, useDeletarJogo, useEditarJogo } from "../hooks/plataformasHooks";
+import { Button, Drawer, Form, Input, Popconfirm, Select, Table, Tag } from "antd";
+import { useBuscarJogo, useCriarJogo, useDeletarJogo, useEditarJogo } from "../hooks/jogosHooks";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { useContext, useState } from "react";
 import { AntContext } from "../contexts/AntProvider";
+import { useBuscarPlataforma } from "../hooks/plataformasHooks";
 
 const Jogos = () => {
 
-    const { data: plataformas } = useBuscarJogo();
-    const { mutateAsync: criarJogo , isPending: criarPending} = useCriarJogo();
-    const { mutateAsync: editarJogo , isPending: editarPending} = useEditarJogo();
+    const { data: jogos } = useBuscarJogo();
+    const { data: plataformas, isFetched: plataformasOk } = useBuscarPlataforma();
+    const { mutateAsync: criarJogo, isPending: criarPending } = useCriarJogo();
+    const { mutateAsync: editarJogo, isPending: editarPending } = useEditarJogo();
     const { mutateAsync: deletarJogo } = useDeletarJogo();
     const { api } = useContext(AntContext);
     const [verCriar, setVerCriar] = useState(false);
@@ -69,10 +71,10 @@ const Jogos = () => {
         <div className="p-15">
             <div className="flex items-center justify-between mb-4">
                 <h1>Pagina de Jogos</h1>
-                <Button type="primary" onClick={() => setVerCriar(true)}>Novo plataforma</Button>
+                <Button type="primary" onClick={() => setVerCriar(true)}>Novo jogo</Button>
             </div>
             <Table
-                dataSource={plataformas || []}
+                dataSource={jogos || []}
                 rowKey={"id"}
             >
                 <Table.Column
@@ -85,6 +87,20 @@ const Jogos = () => {
                     key={"nome"}
                     dataIndex={"nome"}
                     title={"Nome"}
+                />
+                <Table.Column
+                    key={"preco_full"}
+                    dataIndex={"preco_full"}
+                    title={"Preço cheio"}
+                />
+                <Table.Column
+                    key={"preco_promo"}
+                    dataIndex={"preco_promo"}
+                    title={"Preço promocional"}
+                />
+                <Table.Column
+                    title={"Plataforma"}
+                    render={(_, linha) => <Tag variant="solid" color={linha.plataformas.cor}>{linha.plataformas.nome}</Tag>}
                 />
                 <Table.Column
                     title={"Ações"}
@@ -132,7 +148,37 @@ const Jogos = () => {
                     >
                         <Input />
                     </Form.Item>
-
+                    <Form.Item
+                        label={"Plataforma"}
+                        name={"plataforma_id"}
+                        rules={[{ required: true, message: "Campo obrigatório" }]}
+                    >
+                        <Select
+                            placeholder="Escolha a plataforma"
+                            options={(plataformas || []).map(plataforma => {
+                                return {
+                                    label: plataforma.nome,
+                                    value: plataforma.id
+                                }
+                            })}
+                        />
+                    </Form.Item>
+                    <div className="flex gap-4 *:flex-1">
+                        <Form.Item
+                            label={"Preço cheio"}
+                            name={"preco_full"}
+                            rules={[{ required: true, message: "Campo obrigatório" }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label={"Preço promocional"}
+                            name={"preco_promo"}
+                            rules={[{ required: true, message: "Campo obrigatório" }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
                     <Button loading={criarPending} htmlType="submit" type="primary">Criar</Button>
                 </Form>
             </Drawer>

@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Input, Popconfirm, Table } from "antd";
+import { Button, ColorPicker, Drawer, Form, Input, Popconfirm, Table, Tag } from "antd";
 import { useBuscarPlataforma, useCriarPlataforma, useDeletarPlataforma, useEditarPlataforma } from "../hooks/plataformasHooks";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { useContext, useState } from "react";
@@ -7,8 +7,8 @@ import { AntContext } from "../contexts/AntProvider";
 const Plataformas = () => {
 
     const { data: plataformas } = useBuscarPlataforma();
-    const { mutateAsync: criarPlataforma , isPending: criarPending} = useCriarPlataforma();
-    const { mutateAsync: editarPlataforma , isPending: editarPending} = useEditarPlataforma();
+    const { mutateAsync: criarPlataforma, isPending: criarPending } = useCriarPlataforma();
+    const { mutateAsync: editarPlataforma, isPending: editarPending } = useEditarPlataforma();
     const { mutateAsync: deletarPlataforma } = useDeletarPlataforma();
     const { api } = useContext(AntContext);
     const [verCriar, setVerCriar] = useState(false);
@@ -87,6 +87,10 @@ const Plataformas = () => {
                     title={"Nome"}
                 />
                 <Table.Column
+                    title={"Cor"}
+                    render={(_, linha) => <Tag variant="outlined" color={linha.cor}>{linha.cor}</Tag>}
+                />
+                <Table.Column
                     title={"Ações"}
                     className="w-[100px]"
                     render={(_, nivel) => (
@@ -132,6 +136,16 @@ const Plataformas = () => {
                     >
                         <Input />
                     </Form.Item>
+                    <Form.Item
+                        label={"Cor"}
+                        name={"cor"}
+                        rules={[{ required: true, message: "Campo obrigatório" }]}
+                        getValueFromEvent={(color) => {
+                            return color.toHexString();
+                        }}
+                    >
+                        <ColorPicker defaultValue="#1677ff" />
+                    </Form.Item>
 
                     <Button loading={criarPending} htmlType="submit" type="primary">Criar</Button>
                 </Form>
@@ -159,6 +173,20 @@ const Plataformas = () => {
                         rules={[{ required: true, message: "Campo obrigatório" }]}
                     >
                         <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label={"Cor"}
+                        name={"cor"}
+                        rules={[{ required: true, message: "Campo obrigatório" }]}
+                        getValueFromEvent={(color) => {
+                            return color.toHexString();
+                        }}
+                    >
+                        <ColorPicker
+                            defaultValue="#1677ff"
+                            format="hex"
+                        />
                     </Form.Item>
 
                     <Button loading={editarPending} htmlType="submit" type="primary">Editar</Button>

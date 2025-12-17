@@ -38,6 +38,15 @@ const Menu = () => {
                     <NavLink
                         className={`flex items-center gap-3 px-4 rounded leading-8 [&.active]:bg-white [&.active]:text-blue-600`}
                         end
+                        to={"/dashboard/jogos"}>
+                        <LuGamepad/>
+                        Jogos
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        className={`flex items-center gap-3 px-4 rounded leading-8 [&.active]:bg-white [&.active]:text-blue-600`}
+                        end
                         to={"/dashboard/plataformas"}>
                         <LuGamepad/>
                         Plataformas
